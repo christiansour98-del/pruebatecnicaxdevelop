@@ -1,36 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Como correr el proyecto
 
-## Getting Started
-
-First, run the development server:
+primero, correr el servidor de developer con el comando:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrir [http://localhost:3000](http://localhost:3000) en el navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+El proyecto tiene como raiz localhost:3000/login donde mediante el nombre de usuario admin@test.com contrasena 123456 se puede iniciar como administrador o usuario con user@test.com contrasena password123 esta pagina te llevara a localhost:3000/posts donde podra realizar las operaciones de post y put siempre y cuando se sea administrador de lo contrario no podra hacer nada.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Una vez logeado hay otras rutas por visitar que solo son accesibles si se esta logeado como localhost:3000/users?page=1 donde encontraran un listado de los usuarios con su respectivo role, busqueda y filtro por role, ademas este directorio permitira visitar los post de cada usuario y los comentarios dentro de los post asi como agregar a favoritos los post
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+otra de las rutas que requieren estar logeado como administrador o usuario es localhost:3000/books donde se podra hacer una busqueda de libros por titulo con filtrado por autor y por ano de publicacion.
