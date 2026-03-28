@@ -1,5 +1,5 @@
 import Providers from "./providers";
-
+import LogoutButton from "./components/LogoutButton";
 export default function RootLayout({
   children,
 }: {
@@ -8,6 +8,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <LogoutButton />
         <Providers>{children}</Providers>
       </body>
     </html>

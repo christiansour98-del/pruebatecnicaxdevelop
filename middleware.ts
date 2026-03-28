@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyAccessToken } from './app/lib/auth'
+export const runtime = 'nodejs'
 
 const PUBLIC_ROUTES = ['/login', '/api/auth/login', '/api/auth/refresh']
 
