@@ -1,8 +1,10 @@
 ## Como correr el proyecto
 
-primero, correr el servidor de developer con el comando:
+primero instalar las dependencias
+despues correr el servidor de developer con el comando:
 
 ```bash
+npm install
 npm run dev
 ```
 
