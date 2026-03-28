@@ -6,7 +6,11 @@ import { useAuthStore } from "../store/authStore";
 
 type Post = { userId: number; title: string; body: string; id?: number };
 
-async function fetchAddPost(userId: number, title: string, body: string): Promise<Post> {
+async function fetchAddPost(
+  userId: number,
+  title: string,
+  body: string,
+): Promise<Post> {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
     method: "POST",
     body: JSON.stringify({ title, body, userId }),
@@ -16,7 +20,12 @@ async function fetchAddPost(userId: number, title: string, body: string): Promis
   return res.json();
 }
 
-async function fetchModifyPost(id: number, userId: number, title: string, body: string): Promise<Post> {
+async function fetchModifyPost(
+  id: number,
+  userId: number,
+  title: string,
+  body: string,
+): Promise<Post> {
   const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
     method: "PUT",
     body: JSON.stringify({ title, body, userId, id }),
@@ -27,38 +36,44 @@ async function fetchModifyPost(id: number, userId: number, title: string, body: 
 }
 
 export default function PostPage() {
-  const role = useAuthStore(state => state.role)
-  const [post, setPost] = useState<Post>({ userId: 1, title: "", body: "" })
+  const role = useAuthStore((state) => state.role);
+  const [post, setPost] = useState<Post>({ userId: 1, title: "", body: "" });
 
   const { mutate, data, isPending } = useMutation({
     mutationFn: () => fetchAddPost(post.userId, post.title, post.body),
-  })
+  });
 
   return (
     <div className="w-full min-h-screen">
       <h3>Add Post</h3>
-      <Box sx={{ gap: '1rem', display: 'flex' }}>
+      <Box sx={{ gap: "1rem", display: "flex" }}>
         <TextField
           label="userId"
           value={post.userId}
-          onChange={e => setPost(prev => ({ ...prev, userId: Number(e.target.value) }))}
+          onChange={(e) =>
+            setPost((prev) => ({ ...prev, userId: Number(e.target.value) }))
+          }
         />
         <TextField
           label="title"
           value={post.title}
-          onChange={e => setPost(prev => ({ ...prev, title: e.target.value }))}
+          onChange={(e) =>
+            setPost((prev) => ({ ...prev, title: e.target.value }))
+          }
         />
         <TextField
           label="body"
           value={post.body}
-          onChange={e => setPost(prev => ({ ...prev, body: e.target.value }))}
+          onChange={(e) =>
+            setPost((prev) => ({ ...prev, body: e.target.value }))
+          }
         />
         <Button
           variant="outlined"
           onClick={() => mutate()}
-          disabled={role !== 'admin' || isPending}
+          disabled={role !== "admin" || isPending}
         >
-          {isPending ? 'Sending...' : 'Enviar'}
+          {isPending ? "Sending..." : "Send Request"}
         </Button>
       </Box>
 
@@ -73,47 +88,61 @@ export default function PostPage() {
 
       <ModifyPost />
     </div>
-  )
+  );
 }
 
 function ModifyPost() {
-  const role = useAuthStore(state => state.role)
-  const [post, setPost] = useState<Post>({ userId: 1, id: 1, title: "", body: "" })
+  const role = useAuthStore((state) => state.role);
+  const [post, setPost] = useState<Post>({
+    userId: 1,
+    id: 1,
+    title: "",
+    body: "",
+  });
 
   const { mutate, data, isPending } = useMutation({
-    mutationFn: () => fetchModifyPost(post.id!, post.userId, post.title, post.body),
-  })
+    mutationFn: () =>
+      fetchModifyPost(post.id!, post.userId, post.title, post.body),
+  });
 
   return (
     <div className="w-full min-h-screen">
       <h3>Modify Post</h3>
-      <Box sx={{ gap: '1rem', display: 'flex' }}>
+      <Box sx={{ gap: "1rem", display: "flex" }}>
         <TextField
           label="userId"
           value={post.userId}
-          onChange={e => setPost(prev => ({ ...prev, userId: Number(e.target.value) }))}
+          onChange={(e) =>
+            setPost((prev) => ({ ...prev, userId: Number(e.target.value) }))
+          }
         />
         <TextField
           label="Id"
           value={post.id}
-          onChange={e => setPost(prev => ({ ...prev, id: Number(e.target.value) }))}
+          onChange={(e) =>
+            setPost((prev) => ({ ...prev, id: Number(e.target.value) }))
+          }
         />
         <TextField
           label="title"
           value={post.title}
-          onChange={e => setPost(prev => ({ ...prev, title: e.target.value }))}
+          onChange={(e) =>
+            setPost((prev) => ({ ...prev, title: e.target.value }))
+          }
         />
         <TextField
           label="body"
           value={post.body}
-          onChange={e => setPost(prev => ({ ...prev, body: e.target.value }))}
+          onChange={(e) =>
+            setPost((prev) => ({ ...prev, body: e.target.value }))
+          }
         />
         <Button
           variant="outlined"
           onClick={() => mutate()}
-          disabled={role !== 'admin' || isPending}
+          disabled={role !== "admin" || isPending}
         >
-          {isPending ? 'Sending...' : 'Enviar'}
+          {isPending ? "Sending..." : "Send Request"}
         </Button>
       </Box>
 
@@ -126,5 +155,5 @@ function ModifyPost() {
         </ul>
       )}
     </div>
-  )
+  );
 }

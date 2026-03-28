@@ -73,7 +73,7 @@ export default function Login() {
           onClick={handleSubmit}
           disabled={loading || !user.email || !user.password}
         >
-          {loading ? "Logging in..." : "Enviar"}
+          {loading ? "Logging in..." : "Login"}
         </Button>
       </Box>
     </div>
