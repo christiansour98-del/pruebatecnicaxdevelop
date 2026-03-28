@@ -1,6 +1,7 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
+import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 type Book = {
@@ -34,7 +35,7 @@ async function searchBooks(
   return res.json();
 }
 
-export default function BooksPage() {
+function BooksContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const page = Number(searchParams.get("page")) || 1;
@@ -80,7 +81,6 @@ export default function BooksPage() {
     <div style={{ padding: 24, maxWidth: 900, margin: "0 auto" }}>
       <h1>Book search</h1>
 
-      {/* Search bar */}
       <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
         <input
           placeholder="Search books..."
@@ -94,7 +94,6 @@ export default function BooksPage() {
         </button>
       </div>
 
-      {/* Filters */}
       <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
         <input
           placeholder="Filter by author..."
@@ -111,7 +110,6 @@ export default function BooksPage() {
         />
       </div>
 
-      {/* Results */}
       {isLoading && <p>Searching...</p>}
       {isError && <p style={{ color: "red" }}>Error fetching books.</p>}
       {data && (
@@ -133,7 +131,6 @@ export default function BooksPage() {
               cursor: "pointer",
             }}
           >
-            {/* Cover */}
             {book.cover_i ? (
               <img
                 src={`https://covers.openlibrary.org/b/id/${book.cover_i}-S.jpg`}
@@ -150,8 +147,6 @@ export default function BooksPage() {
                 }}
               />
             )}
-
-            {/* Info */}
             <div>
               <strong>{book.title}</strong>
               <p style={{ color: "#666", margin: "4px 0", fontSize: 13 }}>
@@ -167,7 +162,6 @@ export default function BooksPage() {
         ))}
       </ul>
 
-      {/* Pagination */}
       {data && (
         <div
           style={{
@@ -189,7 +183,6 @@ export default function BooksPage() {
         </div>
       )}
 
-      {/* Book detail modal */}
       {selectedBook && (
         <div
           onClick={() => setSelectedBook(null)}
@@ -235,7 +228,6 @@ export default function BooksPage() {
                   }}
                 />
               )}
-
               <div>
                 <h2 style={{ margin: "0 0 8px" }}>{selectedBook.title}</h2>
                 <p style={{ color: "#666" }}>
@@ -261,7 +253,6 @@ export default function BooksPage() {
                 </a>
               </div>
             </div>
-
             <button
               onClick={() => setSelectedBook(null)}
               style={{ marginTop: 24, padding: "8px 16px", width: "100%" }}
@@ -272,5 +263,14 @@ export default function BooksPage() {
         </div>
       )}
     </div>
+  );
+}
+
+// ← default export wraps in Suspense
+export default function BooksPage() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <BooksContent />
+    </Suspense>
   );
 }

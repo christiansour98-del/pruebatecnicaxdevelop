@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -10,6 +10,7 @@ import {
   ColumnFiltersState,
 } from "@tanstack/react-table";
 import Link from "next/link";
+
 type User = {
   id: string;
   name: string;
@@ -17,7 +18,7 @@ type User = {
   role: string;
 };
 
-export default function UsersPage() {
+function UsersContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const page = Number(searchParams.get("page")) || 1;
@@ -94,10 +95,7 @@ export default function UsersPage() {
   const table = useReactTable({
     data: users,
     columns,
-    state: {
-      columnFilters,
-      globalFilter,
-    },
+    state: { columnFilters, globalFilter },
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
@@ -194,5 +192,13 @@ export default function UsersPage() {
         </button>
       </div>
     </div>
+  );
+}
+
+export default function UsersPage() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <UsersContent />
+    </Suspense>
   );
 }
